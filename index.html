@@ -15,23 +15,50 @@
         <img src="./img/rain.png" class="title-Img right" />
       </div>
     </div>
+    <div class="main-flex">
+      <div>
+        <div class="search-card shadow-main">
+          <h1 class="search-title">Search for a Location</h1>
+          <div class="search-param">
+            <label for="city" class="search-param-label"> City: </label>
+            <input type="text" id="city" class="search-io" />
+          </div>
+          <div class="search-param">
+            <label for="state" class="search-param-label"> State: </label>
+            <input type="text" id="state" class="search-io" placeholder="(optional)" />
+          </div>
+          <div class="search-param">
+            <label for="country" class="search-param-label"> Country: </label>
+            <input type="text" id="country" class="search-io" placeholder="(optional)" />
+          </div>
+          <div class="search-submit-cont">
+            <button id="search-submit">Submit</button>
+          </div>
+        </div>
+      </div>
 
-    <div class="search-card shadow-main">
-      <h1 class="search-title">Search for a Location</h1>
-      <div class="search-param">
-        <label for="city" class="search-param-label"> City: </label>
-        <input type="text" id="city" class="search-io" />
-      </div>
-      <div class="search-param">
-        <label for="state" class="search-param-label"> State: </label>
-        <input type="text" id="state" class="search-io" placeholder="(optional)"/>
-      </div>
-      <div class="search-param">
-        <label for="country" class="search-param-label"> Country: </label>
-        <input type="text" id="country" class="search-io" placeholder="(optional)"/>
-      </div>
-      <div class="search-submit-cont">
-        <button id="search-submit">Submit</button>
+      <div class="weather-card shadow-main">
+        <h1 id="location" class="weather-card-title">City</h1>
+        <div class="weather-image-cont">
+          <img src="img/rain.png" alt="" class="weather-card-weather-image" id="weather-img" />
+          <p class="weather-image-descrip" id="weather-descip">Rainy</p>
+        </div>
+        <div class="weather-info">
+          <div class="info-flex">
+            <div class="info-col left">
+              <h1 class="info-col-title">Temperature: </h1>
+              <div>
+                <span class="temp-text" ><span id="Temp">86</span>°</span>
+              </div>
+            </div>
+            <div class="info-col right">
+              <h1 class="info-col-title">Today's Info: </h1>
+              <p>Feels like: </p>
+              <p>Wind Speed like: </p>
+              <p>High/low: </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </body>
