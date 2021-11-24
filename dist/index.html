@@ -24,7 +24,7 @@
             <input type="text" id="city" class="search-io" />
           </div>
           <div class="search-param">
-            <label for="state" class="search-param-label"> State: </label>
+            <label for="state" class="search-param-label"> State Name: </label>
             <input type="text" id="state" class="search-io" placeholder="(optional)" />
           </div>
           <div class="search-param">
@@ -38,7 +38,10 @@
       </div>
 
       <div class="weather-card shadow-main">
-        <h1 id="location" class="weather-card-title">City</h1>
+        <div class="weather-title-flex">
+          <h1 id="location" class="weather-card-title">City</h1>
+          <button id="tempSwap">C° / F°</button>
+        </div>
         <div class="weather-image-cont">
           <img src="img/rain.png" alt="" class="weather-card-weather-image" id="weather-img" />
           <p class="weather-image-descrip" id="weather-description">Rainy</p>

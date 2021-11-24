@@ -2,7 +2,8 @@ import "./styles.css";
 import "./reset.css";
 
 const openWeatherAPIKey = "d46b5662af879b27eb72e6846556115c"; //oh no
-let cityName = "Philadelphia"; //default
+var openWeatherReponseJSON;
+let cityName = "Philadelphia"; //keeps track of last valid city
 let celsius = false;
 
 //dom elements
@@ -17,15 +18,15 @@ const feelsLike = infoFlexCont.querySelector("#real-feel");
 const windSpd = infoFlexCont.querySelector("#wSpeed");
 const hiLo = infoFlexCont.querySelector("#hi-lo");
 
-async function getWeatherJson() {
+async function getWeatherJson(cityName) {
   const openWeatherReponse = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${openWeatherAPIKey}`);
-  const openWeatherReponseJSON = await openWeatherReponse.json();
+  openWeatherReponseJSON = await openWeatherReponse.json();
   if (openWeatherReponseJSON.cod == 200) {
     console.log(openWeatherReponseJSON);
     updateDom(openWeatherReponseJSON);
   }
 }
-getWeatherJson();
+getWeatherJson(cityName);
 
 const KtoCel = (t) => t - 273.15;
 const KtoFaren = (t) => KtoCel(t) * (9 / 5) + 32;
@@ -57,3 +58,8 @@ function updateDom(data) {
 
   windSpd.textContent = `${data.wind.speed} m/s`;
 }
+
+document.getElementById("tempSwap").addEventListener("click", () => {
+  celsius = !celsius;
+  updateDom(openWeatherReponseJSON);
+});
