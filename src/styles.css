@@ -122,6 +122,8 @@ body {
   --img-sz : 10rem;
   width: var(--img-sz);
   height: var(--img-sz);
+  background-color: white;
+  border-radius: 10px;
 }
 
 .weather-image-descrip{
