@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>WeatherApp</title>
     <script src="main.js" defer></script>
   </head>
   <body>
@@ -41,21 +41,21 @@
         <h1 id="location" class="weather-card-title">City</h1>
         <div class="weather-image-cont">
           <img src="img/rain.png" alt="" class="weather-card-weather-image" id="weather-img" />
-          <p class="weather-image-descrip" id="weather-descip">Rainy</p>
+          <p class="weather-image-descrip" id="weather-description">Rainy</p>
         </div>
         <div class="weather-info">
           <div class="info-flex">
             <div class="info-col left">
-              <h1 class="info-col-title">Temperature: </h1>
+              <h1 class="info-col-title">Temperature:</h1>
               <div>
-                <span class="temp-text" ><span id="Temp">86</span>°</span>
+                <span class="temp-text"><span id="Temp">0</span>°<span class="tempFlag">K</span></span>
               </div>
             </div>
             <div class="info-col right">
-              <h1 class="info-col-title">Today's Info: </h1>
-              <p>Feels like: </p>
-              <p>Wind Speed like: </p>
-              <p>High/low: </p>
+              <h1 class="info-col-title">Today's Info:</h1>
+              <p>Feels like: <span class="weather-data" id="real-feel"></span>°<span class="tempFlag"> K</span></p>
+              <p>Wind Speed like: <span class="weather-data" id="wSpeed"></p>
+              <p>High/low: <span class="weather-data" id="hi-lo"></span>°<span class="tempFlag"> K</span></p>
             </div>
           </div>
         </div>
