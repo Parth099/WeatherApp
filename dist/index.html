@@ -19,21 +19,26 @@
       <div>
         <div class="search-card shadow-main">
           <h1 class="search-title">Search for a Location</h1>
-          <div class="search-param">
-            <label for="city" class="search-param-label"> City: </label>
-            <input type="text" id="city" class="search-io" />
-          </div>
-          <div class="search-param">
-            <label for="state" class="search-param-label"> State Name: </label>
-            <input type="text" id="state" class="search-io" placeholder="(optional)" />
-          </div>
-          <div class="search-param">
-            <label for="country" class="search-param-label"> Country: </label>
-            <input type="text" id="country" class="search-io" placeholder="(optional)" />
-          </div>
-          <div class="search-submit-cont">
-            <button id="search-submit">Submit</button>
-          </div>
+            <form onsubmit="return false">
+              <div class="search-param">
+                <label for="city" class="search-param-label"> City: </label>
+                <input type="text" id="city" class="search-io" />
+              </div>
+              <div class="search-param">
+                <label for="state" class="search-param-label"> State Name: </label>
+                <input type="text" id="state" class="search-io" placeholder="(optional)" />
+              </div>
+              <div class="search-param">
+                <label for="country" class="search-param-label"> Country: </label>
+                <input type="text" id="country" class="search-io" placeholder="(optional)" />
+              </div>
+              <div class="error-pane">
+                <p id="error-space"> </p>
+              </div>
+              <div class="search-submit-cont">
+                <button id="search-submit" type="submit" >Submit</button>
+              </div>
+            </form>
         </div>
       </div>
 

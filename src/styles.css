@@ -174,9 +174,12 @@ body {
   font-weight: bold;
   margin-bottom: 5px;
 }
-#tempSwap:hover{
+#tempSwap:hover {
   color: black;
   background-color: #eba63f;
 }
 
-
+#error-space {
+  font-weight: bold;
+  color: var(--accent1);
+}

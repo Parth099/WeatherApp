@@ -2,8 +2,7 @@ import "./styles.css";
 import "./reset.css";
 
 const openWeatherAPIKey = "d46b5662af879b27eb72e6846556115c"; //oh no
-var openWeatherReponseJSON;
-let cityName = "Philadelphia"; //keeps track of last valid city
+var openWeatherReponseJSON; //keeps track of last valid query
 let celsius = false;
 
 //dom elements
@@ -18,15 +17,28 @@ const feelsLike = infoFlexCont.querySelector("#real-feel");
 const windSpd = infoFlexCont.querySelector("#wSpeed");
 const hiLo = infoFlexCont.querySelector("#hi-lo");
 
-async function getWeatherJson(cityName) {
-  const openWeatherReponse = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${openWeatherAPIKey}`);
+const searchCard = document.querySelector(".search-card");
+const cityField = searchCard.querySelector("#city");
+const stateField = searchCard.querySelector("#state");
+const countryField = searchCard.querySelector("#country");
+
+cityField.value = "Philadelphia";
+stateField.value = "";
+countryField.value = "";
+
+const errorSpace = searchCard.querySelector("#error-space");
+const displayError = (errStr) => (errorSpace.textContent = errStr);
+
+async function getWeatherJson(queryString) {
+  const openWeatherReponse = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${queryString}&appid=${openWeatherAPIKey}`);
   openWeatherReponseJSON = await openWeatherReponse.json();
   if (openWeatherReponseJSON.cod == 200) {
-    console.log(openWeatherReponseJSON);
     updateDom(openWeatherReponseJSON);
+  } else {
+    displayError(openWeatherReponseJSON.cod + ": " + openWeatherReponseJSON.message);
   }
 }
-getWeatherJson(cityName);
+getWeatherJson("Philadelphia");
 
 const KtoCel = (t) => t - 273.15;
 const KtoFaren = (t) => KtoCel(t) * (9 / 5) + 32;
@@ -45,6 +57,7 @@ function calulateTempData(data) {
 
 //data will always be valid
 function updateDom(data) {
+  errorSpace.textContent = ""; //clear errorSpace
   const TempData = Object.assign({}, data.main); //creates new object that can be altered
   calulateTempData(TempData); //changes K deg to what is required {C, F}
 
@@ -62,4 +75,24 @@ function updateDom(data) {
 document.getElementById("tempSwap").addEventListener("click", () => {
   celsius = !celsius;
   updateDom(openWeatherReponseJSON);
+});
+
+document.getElementById("search-submit").addEventListener("click", () => {
+  let queryString = "";
+  if (cityField.value.length !== 0) {
+    queryString += cityField.value;
+  } else {
+    return;
+  }
+
+  if (stateField.value.length !== 0) {
+    queryString += "," + stateField.value;
+  }
+  if (countryField.value.length !== 0) {
+    queryString += "," + countryField.value;
+  }
+
+  getWeatherJson(queryString).catch(() => {
+    console.log(queryString + " is invalid");
+  });
 });
