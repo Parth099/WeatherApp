@@ -797,7 +797,9 @@ const displayError = (errStr) => (errorSpace.textContent = errStr);
 //main function: calls the API and triggers DOM update as well as saves prev valid Calls.
 //its chained to call another async function if the first call was valid [cod: 200OK]
 async function getWeatherJson(queryString) {
-  const openWeatherReponse = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${queryString}&appid=${openWeatherAPIKey}`);
+  const openWeatherReponse = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${queryString}&appid=${openWeatherAPIKey}`, {
+    mode: "cors",
+  });
   const openWeatherReponsePotential = await openWeatherReponse.json();
   if (openWeatherReponsePotential.cod == 200) {
     updateDom(openWeatherReponsePotential);
@@ -867,7 +869,8 @@ document.getElementById("search-submit").addEventListener("click", () => {
 
 async function getWeatherForcastJson(coord) {
   const data = await fetch(
-    `https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&exclude=minutely,hourly&appid=${openWeatherAPIKey}`
+    `https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&exclude=minutely,hourly&appid=${openWeatherAPIKey}`,
+    { mode: "cors" }
   );
   const potential = await data.json();
   if (potential.current !== "undefined") {
