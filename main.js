@@ -797,7 +797,7 @@ const displayError = (errStr) => (errorSpace.textContent = errStr);
 //main function: calls the API and triggers DOM update as well as saves prev valid Calls.
 //its chained to call another async function if the first call was valid [cod: 200OK]
 async function getWeatherJson(queryString) {
-  const openWeatherReponse = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${queryString}&appid=${openWeatherAPIKey}`, {
+  const openWeatherReponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${queryString}&appid=${openWeatherAPIKey}`, {
     mode: "cors",
   });
   const openWeatherReponsePotential = await openWeatherReponse.json();
@@ -833,7 +833,7 @@ function updateDom(data) {
   calulateTempData(TempData); //changes K deg to what is required {C, F}
 
   cardLoc.textContent = `${data.name}, ${data.sys.country}`;
-  weatherImg.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+  weatherImg.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
   weatherDescrip.textContent = data.weather[0].main;
 
   temp.textContent = parseInt(TempData.temp);
