@@ -198,6 +198,7 @@ body {
   padding: 10px;
   background-color: #718cc5;
   color: white;
+  margin-bottom: 150px;
 }
 .WF-title {
   color: white;
@@ -242,4 +243,16 @@ body {
 .day-hiLo {
   margin-top: 15px;
   font-weight: bold;
+}
+
+@media only screen and (max-width: 1100px) {
+  .main-cont {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    width: 100%;
+  }
+  .search-card {
+    justify-self: auto;
+    min-width: 350px;
+  }
 }
