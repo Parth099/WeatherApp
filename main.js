@@ -627,7 +627,7 @@ const KtoFaren = (t) => KtoCel(t) * (9 / 5) + 32;
 class DayCard {
   //method
 
-  createDayCard(weatherData, tempChar, date) {
+  createDayCard(weatherData, tempChar, date, convertionFunc) {
     /*
     OUTLINE:
         <div class="day-card">
@@ -639,7 +639,6 @@ class DayCard {
           <p class="day-hiLo">Temperature: <span class="day-hiLo">12/17</span>°<span class="tempFlag"> K</span></p>
         </div>
     */
-    const convertionFunc = tempChar === "C" ? KtoCel : KtoFaren;
     const main = document.createElement("div");
     main.classList.add("day-card");
 
@@ -795,6 +794,8 @@ countryField.value = "";
 const errorSpace = searchCard.querySelector("#error-space");
 const displayError = (errStr) => (errorSpace.textContent = errStr);
 
+//main function: calls the API and triggers DOM update as well as saves prev valid Calls.
+//its chained to call another async function if the first call was valid [cod: 200OK]
 async function getWeatherJson(queryString) {
   const openWeatherReponse = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${queryString}&appid=${openWeatherAPIKey}`);
   const openWeatherReponsePotential = await openWeatherReponse.json();
@@ -802,7 +803,6 @@ async function getWeatherJson(queryString) {
     updateDom(openWeatherReponsePotential);
     openWeatherReponseJSON = openWeatherReponsePotential;
     getWeatherForcastJson(openWeatherReponseJSON.coord);
-    //console.log(openWeatherReponseJSON.coord);
   } else {
     displayError(openWeatherReponsePotential.cod + ": " + openWeatherReponsePotential.message);
   }
@@ -880,10 +880,11 @@ function displayToGrid(G, weatherData) {
   document.querySelectorAll(".day-card").forEach((card) => card.remove());
   const C = new _dayCard_js__WEBPACK_IMPORTED_MODULE_2__["default"]();
   let date = new Date();
+  let tFlag = celsius ? "C" : "F";
+  let convertionFunc = celsius ? KtoCel : KtoFaren;
   for (let i = 1; i < 8; i++) {
     date.setDate(date.getDate() + 1);
-    G.appendChild(C.createDayCard(weatherData.daily[i], celsius ? "C" : "F", date));
-    console.log(date);
+    G.appendChild(C.createDayCard(weatherData.daily[i], tFlag, date, convertionFunc));
   }
 }
 
