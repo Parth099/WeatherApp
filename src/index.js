@@ -34,6 +34,8 @@ countryField.value = "";
 const errorSpace = searchCard.querySelector("#error-space");
 const displayError = (errStr) => (errorSpace.textContent = errStr);
 
+//main function: calls the API and triggers DOM update as well as saves prev valid Calls.
+//its chained to call another async function if the first call was valid [cod: 200OK]
 async function getWeatherJson(queryString) {
   const openWeatherReponse = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${queryString}&appid=${openWeatherAPIKey}`);
   const openWeatherReponsePotential = await openWeatherReponse.json();
@@ -41,7 +43,6 @@ async function getWeatherJson(queryString) {
     updateDom(openWeatherReponsePotential);
     openWeatherReponseJSON = openWeatherReponsePotential;
     getWeatherForcastJson(openWeatherReponseJSON.coord);
-    //console.log(openWeatherReponseJSON.coord);
   } else {
     displayError(openWeatherReponsePotential.cod + ": " + openWeatherReponsePotential.message);
   }
@@ -53,13 +54,13 @@ const KtoFaren = (t) => KtoCel(t) * (9 / 5) + 32;
 const applyTempFlagsDom = (flag) => document.querySelectorAll(".tempFlag").forEach((f) => (f.textContent = flag));
 
 function calulateTempData(data) {
-  let convertionFunc = celsius ? KtoCel : KtoFaren;
+  const convertionFunc = celsius ? KtoCel : KtoFaren;
   data.temp = convertionFunc(data.temp);
   data.feels_like = convertionFunc(data.feels_like);
   data.temp_max = convertionFunc(data.temp_max);
   data.temp_min = convertionFunc(data.temp_min);
 
-  let flag = celsius ? "C" : "F";
+  const flag = celsius ? "C" : "F";
   applyTempFlagsDom(flag);
 }
 
@@ -108,7 +109,6 @@ async function getWeatherForcastJson(coord) {
   const data = await fetch(
     `https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&exclude=minutely,hourly&appid=${openWeatherAPIKey}`
   );
-  const D = new DayCard();
   const potential = await data.json();
   if (potential.current !== "undefined") {
     openWeatherReponseWeeklyJson = potential;
@@ -118,10 +118,11 @@ async function getWeatherForcastJson(coord) {
 function displayToGrid(G, weatherData) {
   document.querySelectorAll(".day-card").forEach((card) => card.remove());
   const C = new DayCard();
-  let date = new Date();
+  const date = new Date();
+  const tFlag = celsius ? "C" : "F";
+  const convertionFunc = celsius ? KtoCel : KtoFaren;
   for (let i = 1; i < 8; i++) {
     date.setDate(date.getDate() + 1);
-    G.appendChild(C.createDayCard(weatherData.daily[i], celsius ? "C" : "F", date));
-    console.log(date);
+    G.appendChild(C.createDayCard(weatherData.daily[i], tFlag, date, convertionFunc));
   }
 }

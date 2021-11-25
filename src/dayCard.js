@@ -4,7 +4,7 @@ const KtoFaren = (t) => KtoCel(t) * (9 / 5) + 32;
 export default class DayCard {
   //method
 
-  createDayCard(weatherData, tempChar, date) {
+  createDayCard(weatherData, tempChar, date, convertionFunc) {
     /*
     OUTLINE:
         <div class="day-card">
@@ -16,7 +16,6 @@ export default class DayCard {
           <p class="day-hiLo">Temperature: <span class="day-hiLo">12/17</span>°<span class="tempFlag"> K</span></p>
         </div>
     */
-    const convertionFunc = tempChar === "C" ? KtoCel : KtoFaren;
     const main = document.createElement("div");
     main.classList.add("day-card");
 
