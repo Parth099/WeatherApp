@@ -1,11 +1,16 @@
 import "./styles.css";
 import "./reset.css";
 
+import DayCard from "./dayCard.js";
+
 const openWeatherAPIKey = "d46b5662af879b27eb72e6846556115c"; //oh no
 var openWeatherReponseJSON; //keeps track of last valid query
+var openWeatherReponseWeeklyJson;
 let celsius = false;
 
 //dom elements
+const gridDaily = document.querySelector(".daily-grid-cont");
+
 const cardMain = document.querySelector(".weather-card");
 const cardLoc = cardMain.querySelector("#location");
 const weatherImg = cardMain.querySelector("#weather-img");
@@ -31,11 +36,14 @@ const displayError = (errStr) => (errorSpace.textContent = errStr);
 
 async function getWeatherJson(queryString) {
   const openWeatherReponse = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${queryString}&appid=${openWeatherAPIKey}`);
-  openWeatherReponseJSON = await openWeatherReponse.json();
-  if (openWeatherReponseJSON.cod == 200) {
-    updateDom(openWeatherReponseJSON);
+  const openWeatherReponsePotential = await openWeatherReponse.json();
+  if (openWeatherReponsePotential.cod == 200) {
+    updateDom(openWeatherReponsePotential);
+    openWeatherReponseJSON = openWeatherReponsePotential;
+    getWeatherForcastJson(openWeatherReponseJSON.coord);
+    //console.log(openWeatherReponseJSON.coord);
   } else {
-    displayError(openWeatherReponseJSON.cod + ": " + openWeatherReponseJSON.message);
+    displayError(openWeatherReponsePotential.cod + ": " + openWeatherReponsePotential.message);
   }
 }
 getWeatherJson("Philadelphia");
@@ -75,6 +83,7 @@ function updateDom(data) {
 document.getElementById("tempSwap").addEventListener("click", () => {
   celsius = !celsius;
   updateDom(openWeatherReponseJSON);
+  displayToGrid(gridDaily, openWeatherReponseWeeklyJson);
 });
 
 document.getElementById("search-submit").addEventListener("click", () => {
@@ -92,7 +101,27 @@ document.getElementById("search-submit").addEventListener("click", () => {
     queryString += "," + countryField.value;
   }
 
-  getWeatherJson(queryString).catch(() => {
-    console.log(queryString + " is invalid");
-  });
+  getWeatherJson(queryString);
 });
+
+async function getWeatherForcastJson(coord) {
+  const data = await fetch(
+    `https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&exclude=minutely,hourly&appid=${openWeatherAPIKey}`
+  );
+  const D = new DayCard();
+  const potential = await data.json();
+  if (potential.current !== "undefined") {
+    openWeatherReponseWeeklyJson = potential;
+    displayToGrid(gridDaily, openWeatherReponseWeeklyJson);
+  }
+}
+function displayToGrid(G, weatherData) {
+  document.querySelectorAll(".day-card").forEach((card) => card.remove());
+  const C = new DayCard();
+  let date = new Date();
+  for (let i = 1; i < 8; i++) {
+    date.setDate(date.getDate() + 1);
+    G.appendChild(C.createDayCard(weatherData.daily[i], celsius ? "C" : "F", date));
+    console.log(date);
+  }
+}

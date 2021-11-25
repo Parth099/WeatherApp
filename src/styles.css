@@ -6,6 +6,7 @@
   --accent1: #1a2238;
   --accent2: #a0aecd;
   --titleFN-sz: 1.75rem;
+  --box-sz: 250px;
 }
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
 body {
@@ -27,6 +28,7 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding: 18px;
 }
 .title-Img {
   width: var(--font-sz);
@@ -50,6 +52,7 @@ body {
   margin: 10px;
   margin-top: 35px;
   height: fit-content;
+  justify-self: right;
 }
 .shadow-main {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
@@ -100,8 +103,7 @@ body {
   max-width: 700px;
   padding: 20px;
   border-radius: 10px;
-  margin: 10px;
-  margin-top: 35px;
+  margin: 35px 0px 10px 10px;
   background-color: var(--accent1);
   color: white;
 }
@@ -182,4 +184,62 @@ body {
 #error-space {
   font-weight: bold;
   color: var(--accent1);
+}
+.main-cont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 70%;
+  margin: 15px auto;
+}
+.weekly-forcast {
+  width: 70%;
+  margin: 15px auto;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #718cc5;
+  color: white;
+}
+.WF-title {
+  color: white;
+  padding-left: 10px;
+  border-bottom: 1px white solid;
+}
+.day-card {
+  background-color: var(--accent1);
+  height: var(--box-sz);
+  width: var(--box-sz);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+}
+.daily-grid-cont {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--box-sz));
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+.day-card-title {
+  font-size: 1.25rem;
+  margin: 10px;
+}
+.day-card-image {
+  --img-sz: 7rem;
+  width: var(--img-sz);
+  height: var(--img-sz);
+  background-color: white;
+  border-radius: 10px;
+}
+.day-img-cont {
+  display: flex;
+  justify-content: center;
+}
+.day-img-descrip {
+  margin: 8px;
+}
+.day-hiLo {
+  margin-top: 15px;
+  font-weight: bold;
 }
